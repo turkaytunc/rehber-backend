@@ -7,3 +7,8 @@ export const createUser = (req: Request, res: Response, next: NextFunction) => {
 
   return res.json({ username });
 };
+export const updateUser = (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+
+  return res.json({ id });
+};

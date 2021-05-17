@@ -1,1 +1,1 @@
-export { createUser } from './userControllers';
+export { createUser, updateUser } from './userControllers';
