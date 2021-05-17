@@ -1,9 +1,14 @@
 import pool from '../db/pool';
 
-const createUser = () => {};
+class User {
+  constructor() {}
+  createUser = async (username: string) => {
+    return await pool.query(`INSERT INTO users(username) values($1)`, [username]);
+  };
 
-const updateUserById = () => {};
-
-const User = { updateUserById, createUser };
+  updateUserByEmail = async (username: string, email: string) => {
+    return await pool.query(`UPDATE users SET username = $1 WHERE email = $2`, [username, email]);
+  };
+}
 
 export default User;
