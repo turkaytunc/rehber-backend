@@ -4,6 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 
 import { userRouter } from './routers';
+import apiDocRouter from './routers/apiDocRouter';
 
 const app = express();
 
@@ -11,10 +12,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(helmet());
 
-app.get('/', (req, res, next) => {
-  res.json({ message: 'Hello' });
-});
-
+app.use('/', apiDocRouter);
 app.use('/user', userRouter);
 
 export default app;
