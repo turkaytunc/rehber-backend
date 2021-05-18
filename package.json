@@ -7,7 +7,9 @@
     "test": "jest",
     "build": "tsc -p .",
     "start": "tsc -p . && node dist/server.js",
-    "dev": "nodemon -L server.ts"
+    "dev": "nodemon -L server.ts",
+    "compose:dev:up": "docker-compose -f docker-compose.dev.yml up",
+    "compose:dev:down": "docker-compose -f docker-compose.dev.yml down"
   },
   "repository": {
     "type": "git",

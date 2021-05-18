@@ -1,0 +1,30 @@
+version: '3'
+services:
+  api-rehber:
+    container_name: api-rehber
+    read_only: true
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    image: api-rehber:1.0
+    ports:
+      - 4001:4001
+    restart: always
+    volumes:
+      - .:/usr/app/rehber-backend
+      - /usr/app/rehber-backend/node_modules
+    env_file:
+      - ./.env
+    depends_on:
+      - postgresdb
+
+  postgresdb:
+    image: postgres:13.2
+    env_file:
+      - ./.env
+    volumes:
+      - pg-vol:/data/postgresdb
+    ports:
+      - 5432:5432
+volumes:
+  pg-vol:
