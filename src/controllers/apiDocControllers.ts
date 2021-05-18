@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 
-export const getApiDoc = (req: Request, res: Response, next: NextFunction) => {
+export const getApiDoc = (req: Request, res: Response): Response => {
   return res.json({ docs: 'docs' });
 };
