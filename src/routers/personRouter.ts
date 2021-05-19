@@ -3,7 +3,7 @@ import { personControllers } from '../controllers';
 
 const userRouter = express.Router();
 
-userRouter.get('/create', personControllers.createUser);
-userRouter.get('/update/:id', personControllers.updateUser);
+userRouter.post('/create', personControllers.createPerson);
+userRouter.patch('/update/:id', personControllers.updatePerson);
 
 export default userRouter;
