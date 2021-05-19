@@ -2,14 +2,14 @@ import { Address } from './Address';
 
 export class Person {
   firstname: string;
-  phoneNumber: number;
-  age = 0;
-  surname = '';
+  lastname = '';
   nickname = '';
   address: Address | undefined;
+  email = '';
+  phoneNumber: string;
   note = '';
 
-  constructor(firstname: string, phoneNumber: number) {
+  constructor(firstname: string, phoneNumber: string) {
     this.firstname = firstname;
     this.phoneNumber = phoneNumber;
   }
