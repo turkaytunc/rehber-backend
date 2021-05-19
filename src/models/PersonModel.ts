@@ -6,7 +6,7 @@ class PersonModel {
     return await pool.query(`SELECT * FROM people WHERE person_id = $1`, [personId]);
   };
 
-  createUser = async (firstname: string): Promise<QueryResult<never>> => {
+  createPerson = async (firstname: string): Promise<QueryResult<never>> => {
     return await pool.query(
       `INSERT INTO people(
         firstname, 
