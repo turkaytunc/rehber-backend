@@ -2,13 +2,30 @@ import { QueryResult } from 'pg';
 import pool from '../db/pool';
 
 class PersonModel {
-  createUser = async (username: string): Promise<QueryResult<never>> => {
-    return await pool.query(`INSERT INTO users(username) values($1)`, [username]);
+  getByPersonId = async (personId: string): Promise<QueryResult<never>> => {
+    return await pool.query(`SELECT * FROM people WHERE person_id = $1`, [personId]);
   };
 
-  updateUserByEmail = async (username: string, email: string): Promise<QueryResult<never>> => {
-    return await pool.query(`UPDATE users SET username = $1 WHERE email = $2`, [username, email]);
+  createUser = async (firstname: string): Promise<QueryResult<never>> => {
+    return await pool.query(
+      `INSERT INTO people(
+        firstname, 
+        lastname, 
+        nickname, 
+        address, 
+        email, 
+        phone_number, 
+        note) 
+        
+        values($1)
+        RETURNING *`,
+      [firstname]
+    );
+  };
+
+  updatePersonByEmail = async (firstname: string, email: string): Promise<QueryResult<never>> => {
+    return await pool.query(`UPDATE people SET firstname = $1 WHERE email = $2`, [firstname, email]);
   };
 }
 
-export default PersonModel;
+export default new PersonModel();
