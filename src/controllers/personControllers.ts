@@ -16,9 +16,9 @@ export const createPerson = async (req: Request, res: Response, next: NextFuncti
 
     const foundPerson = await PersonModel.getPersonByEmail(email);
 
-    const isUserExist = foundPerson?.rows?.length !== undefined && foundPerson?.rows?.length > 0;
-    if (isUserExist) {
-      throw new HttpError('User already exists!', 400);
+    const isPersonExist = foundPerson?.rows?.length !== undefined && foundPerson?.rows?.length > 0;
+    if (isPersonExist) {
+      throw new HttpError('Person already exists!', 400);
     }
 
     const newPerson = await PersonModel.createPerson(person);
