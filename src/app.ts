@@ -3,16 +3,16 @@ import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
 
-import { personRouter } from './routers';
-import apiDocRouter from './routers/apiDocRouter';
+import { personRouter, apiDocRouter } from './routers';
 
 const app = express();
 
 app.use(morgan('dev'));
 app.use(cors());
 app.use(helmet());
+app.use(express.json());
 
 app.use('/', apiDocRouter);
-app.use('/user', personRouter);
+app.use('/person', personRouter);
 
 export default app;

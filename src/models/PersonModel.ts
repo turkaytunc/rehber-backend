@@ -3,32 +3,23 @@ import pool from '../db/pool';
 import { Person } from '../types';
 
 class PersonModel {
-  getPersonById = async (personId: string): Promise<QueryResult<never>> => {
+  getPersonById = async (personId: string): Promise<QueryResult<Person>> => {
     return await pool.query(`SELECT * FROM people WHERE person_id = $1`, [personId]);
   };
 
-  createPerson = async (person: Person): Promise<QueryResult<never>> => {
+  createPerson = async (person: Person): Promise<QueryResult<Person>> => {
     return await pool.query(
       `INSERT INTO people(
         firstname, 
         lastname, 
         nickname, 
-        address, 
         email, 
         phone_number, 
         note) 
         
-        values($1)
+        values($1, $2, $3, $4, $5, $6)
         RETURNING *`,
-      [
-        person.firstname,
-        person.lastname,
-        person.nickname,
-        person.address,
-        person.email,
-        person.phoneNumber,
-        person.note,
-      ]
+      [person.firstname, person.lastname, person.nickname, person.email, person.phoneNumber, person.note]
     );
   };
 

@@ -1,4 +1,4 @@
-import { Person, Address } from '../types';
+import { Person } from '../types';
 
 export class PersonBuilder {
   person: Person;
@@ -18,11 +18,6 @@ export class PersonBuilder {
 
   setNickname(nickname: string): PersonBuilder {
     this.person.nickname = nickname;
-    return this;
-  }
-
-  setAddress(address: Address | undefined): PersonBuilder {
-    this.person.address = address;
     return this;
   }
 
