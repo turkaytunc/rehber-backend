@@ -1,7 +1,7 @@
 import { QueryResult } from 'pg';
 import pool from '../db/pool';
 
-class User {
+class PersonModel {
   createUser = async (username: string): Promise<QueryResult<never>> => {
     return await pool.query(`INSERT INTO users(username) values($1)`, [username]);
   };
@@ -11,4 +11,4 @@ class User {
   };
 }
 
-export default User;
+export default PersonModel;

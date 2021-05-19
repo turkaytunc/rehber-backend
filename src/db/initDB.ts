@@ -1,4 +1,4 @@
-import pool from '../db/pool';
+import pool from './pool';
 
 export const initDB = async (): Promise<boolean> => {
   try {
@@ -9,9 +9,10 @@ export const initDB = async (): Promise<boolean> => {
       firstname VARCHAR(30) NOT NULL,
       lastname VARCHAR(30) NOT NULL,
       nickname VARCHAR(30) NOT NULL,
-      note VARCHAR(200) NOT NULL,
+      address VARCHAR(200) NOT NULL,
       email VARCHAR(50) NOT NULL,
       phone_number VARCHAR(15) NOT NULL,
+      note VARCHAR(200) NOT NULL
     );
     `);
     return true;
