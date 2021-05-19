@@ -4,9 +4,9 @@ import PersonModel from '../models/PersonModel';
 export const createUser = async (req: Request, res: Response, next: NextFunction): Promise<unknown> => {
   try {
     const { username } = req.query;
-    const newUser = PersonModel.createUser(username as string);
+    const newUser = await PersonModel.createUser(username as string);
 
-    return res.json({ newUser });
+    return res.json({ newUser: newUser.rows[0] });
   } catch (error) {
     return next(error);
   }

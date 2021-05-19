@@ -2,7 +2,7 @@ import { QueryResult } from 'pg';
 import pool from '../db/pool';
 
 class PersonModel {
-  getByPersonId = async (personId: string): Promise<QueryResult<never>> => {
+  getPersonById = async (personId: string): Promise<QueryResult<never>> => {
     return await pool.query(`SELECT * FROM people WHERE person_id = $1`, [personId]);
   };
 
