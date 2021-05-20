@@ -5,16 +5,16 @@ import { HttpError } from '../util/HttpError';
 
 export const createPerson = async (req: Request, res: Response, next: NextFunction): Promise<unknown> => {
   try {
-    const { firstname, lastname, nickname, email, phoneNumber, note } = req.body;
+    const { firstname, lastname, nickname, email, phone_number, note } = req.body;
 
-    const person = new PersonBuilder(firstname, phoneNumber)
+    const person = new PersonBuilder(firstname, phone_number)
       .setLastname(lastname)
       .setNickname(nickname)
       .setEmail(email)
       .setNote(note)
       .build();
 
-    const foundPerson = await PersonModel.getPersonByEmail(email);
+    const foundPerson = await PersonModel.findPersonByEmail(email);
 
     const isPersonExist = foundPerson?.rows?.length !== undefined && foundPerson?.rows?.length > 0;
     if (isPersonExist) {
@@ -29,8 +29,21 @@ export const createPerson = async (req: Request, res: Response, next: NextFuncti
   }
 };
 
-export const updatePerson = (req: Request, res: Response): Response => {
-  const { id } = req.params;
+export const updatePerson = async (req: Request, res: Response, next: NextFunction): Promise<unknown> => {
+  try {
+    const { id } = req.params;
 
-  return res.json({ id });
+    const foundPerson = await PersonModel.findPersonById(id);
+
+    const isPersonExist = foundPerson?.rows?.length !== undefined && foundPerson?.rows?.length > 0;
+    if (!isPersonExist) {
+      throw new HttpError('Person not exists', 400);
+    }
+
+    const updatedPerson = await PersonModel.updatePersonByEmail(foundPerson.rows[0]);
+
+    return res.json({ person: updatedPerson.rows[0] });
+  } catch (error) {
+    return next(error);
+  }
 };

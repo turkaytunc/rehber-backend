@@ -3,15 +3,17 @@ import pool from '../db/pool';
 import { Person } from '../types';
 
 class PersonModel {
-  getPersonById = async (personId: string): Promise<QueryResult<Person>> => {
+  findPersonById = async (personId: string): Promise<QueryResult<Person>> => {
     return await pool.query(`SELECT * FROM people WHERE person_id = $1`, [personId]);
   };
 
-  getPersonByEmail = async (email: string): Promise<QueryResult<Person>> => {
+  findPersonByEmail = async (email: string): Promise<QueryResult<Person>> => {
     return await pool.query(`SELECT * FROM people WHERE email = $1`, [email]);
   };
 
   createPerson = async (person: Person): Promise<QueryResult<Person>> => {
+    const { firstname, lastname, nickname, email, phone_number, note } = person;
+
     return await pool.query(
       `INSERT INTO people(
         firstname, 
@@ -23,12 +25,24 @@ class PersonModel {
         
         values($1, $2, $3, $4, $5, $6)
         RETURNING *`,
-      [person.firstname, person.lastname, person.nickname, person.email, person.phoneNumber, person.note]
+      [firstname, lastname, nickname, email, phone_number, note]
     );
   };
 
-  updatePersonByEmail = async (firstname: string, email: string): Promise<QueryResult<never>> => {
-    return await pool.query(`UPDATE people SET firstname = $1 WHERE email = $2`, [firstname, email]);
+  updatePersonByEmail = async (person: Person): Promise<QueryResult<never>> => {
+    const { firstname, lastname, nickname, email, phone_number, note } = person;
+
+    return await pool.query(
+      `UPDATE people SET 
+        firstname = $2, 
+        lastname = $3, 
+        nickname = $4, 
+        phone_number = $5, 
+        note = $6 
+       WHERE email = $1 
+       RETURNING *`,
+      [email, firstname, lastname, nickname, phone_number, note]
+    );
   };
 }
 

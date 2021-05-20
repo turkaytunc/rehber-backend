@@ -2,8 +2,8 @@ import { Person } from '../types';
 
 export class PersonBuilder {
   person: Person;
-  constructor(firstname: string, phoneNumber: string) {
-    this.person = new Person(firstname, phoneNumber);
+  constructor(firstname: string, phone_number: string) {
+    this.person = new Person(firstname, phone_number);
   }
 
   setFirstname(firstname: string): PersonBuilder {
@@ -26,8 +26,8 @@ export class PersonBuilder {
     return this;
   }
 
-  setPhoneNumber(phoneNumber: string): PersonBuilder {
-    this.person.phoneNumber = phoneNumber;
+  setPhoneNumber(phone_number: string): PersonBuilder {
+    this.person.phone_number = phone_number;
     return this;
   }
 
