@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { PersonBuilder } from '../builders';
 import PersonModel from '../models/PersonModel';
 import { HttpError } from '../util/HttpError';
+import { isPersonExists } from '../util/isPersonExists';
 
 export const createPerson = async (req: Request, res: Response, next: NextFunction): Promise<unknown> => {
   try {
@@ -16,14 +17,13 @@ export const createPerson = async (req: Request, res: Response, next: NextFuncti
 
     const foundPerson = await PersonModel.findPersonByEmail(email);
 
-    const isPersonExist = foundPerson?.rows?.length !== undefined && foundPerson?.rows?.length > 0;
-    if (isPersonExist) {
+    if (isPersonExists(foundPerson)) {
       throw new HttpError('Person already exists!', 400);
     }
 
     const newPerson = await PersonModel.createPerson(person);
 
-    return res.json({ newPerson: newPerson.rows[0] });
+    return res.json({ person: newPerson.rows[0] });
   } catch (error) {
     return next(error);
   }
@@ -36,8 +36,7 @@ export const updatePerson = async (req: Request, res: Response, next: NextFuncti
 
     const foundPerson = await PersonModel.findPersonById(id);
 
-    const isPersonExist = foundPerson?.rows?.length !== undefined && foundPerson?.rows?.length > 0;
-    if (!isPersonExist) {
+    if (!isPersonExists(foundPerson)) {
       throw new HttpError('Person not exists', 400);
     }
 
