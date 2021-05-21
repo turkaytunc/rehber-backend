@@ -9,7 +9,7 @@ import { HttpError } from './util/HttpError';
 const app = express();
 
 app.use(morgan('dev'));
-app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(helmet());
 app.use(express.json());
 
