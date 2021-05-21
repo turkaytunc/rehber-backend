@@ -7,6 +7,10 @@ class PersonModel {
     return await pool.query(`SELECT * FROM people WHERE person_id = $1`, [personId]);
   };
 
+  getPeople = async (): Promise<QueryResult<Person[]>> => {
+    return await pool.query(`SELECT * FROM people`);
+  };
+
   findPersonByEmail = async (email: string): Promise<QueryResult<Person>> => {
     return await pool.query(`SELECT * FROM people WHERE email = $1`, [email]);
   };

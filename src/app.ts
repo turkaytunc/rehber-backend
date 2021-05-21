@@ -33,4 +33,5 @@ app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {
     message: error.message || 'An unexpected error occurred!',
   });
 });
+
 export default app;

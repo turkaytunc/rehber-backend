@@ -54,3 +54,13 @@ export const updatePerson = async (req: Request, res: Response, next: NextFuncti
     return next(error);
   }
 };
+
+export const getPeople = async (req: Request, res: Response, next: NextFunction): Promise<unknown> => {
+  try {
+    const people = await PersonModel.getPeople();
+
+    return res.json({ people: people.rows });
+  } catch (error) {
+    return next(error);
+  }
+};
