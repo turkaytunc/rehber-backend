@@ -48,6 +48,10 @@ class PersonModel {
       [email, firstname, lastname, nickname, phone_number, note]
     );
   };
+
+  deletePersonById = async (personId: string): Promise<QueryResult<Person>> => {
+    return await pool.query(`DELETE FROM people WHERE person_id = $1`, [personId]);
+  };
 }
 
 export default new PersonModel();

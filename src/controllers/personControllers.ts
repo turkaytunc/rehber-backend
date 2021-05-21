@@ -64,3 +64,14 @@ export const getPeople = async (req: Request, res: Response, next: NextFunction)
     return next(error);
   }
 };
+
+export const deletePerson = async (req: Request, res: Response, next: NextFunction): Promise<unknown> => {
+  try {
+    const { id } = req.params;
+    await PersonModel.deletePersonById(id);
+
+    return res.json({ message: 'deleted' });
+  } catch (error) {
+    return next(error);
+  }
+};
